@@ -3,7 +3,6 @@ from skimage import data, img_as_float
 from skimage.color import rgb2gray
 from numpy.linalg import svd
 import numpy as np
-import matplotlib.pyplot as plt
 import streamlit as st
 from PIL import Image
 
