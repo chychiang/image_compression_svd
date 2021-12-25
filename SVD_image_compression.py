@@ -23,11 +23,10 @@ if option == 'I\'ll upload my own image':
     if img_file is not None:
         img = load_image(img_file)
 else:
-    img = data.camera() # convert image to grayscale
+    img = data.astronaut()
     
-
 if img is not None: 
-    img = rgb2gray(img_as_float(img)) # convert image to grayscale
+    img = rgb2gray(img) # convert image to grayscale
     U, S, V = svd(img, full_matrices=False)
     
     # let users choose the k value
