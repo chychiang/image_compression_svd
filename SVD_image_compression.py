@@ -27,13 +27,24 @@ else:
     
 if img is not None: 
     img = rgb2gray(img) # convert image to grayscale
-    U, S, V = svd(img, full_matrices=False)
+    U, S, V = svd(img, full_matrices=False) 
+    
+    # trim off singular values that are too smaller below a threshold
+    cutoff = S.shape[0]
+    for i, s in enumerate(S):
+        # print(i, s)
+        if s < 1e-5:
+            cutoff = i
+            break
+    U = U[:, :cutoff]
+    S = S[:cutoff]
+    V = V[:cutoff, :]
     
     # let users choose the k value
     st.write("Play with the # of vectors to reconstruct the image with")
     k = st.slider("Select the # of vectors", min_value=1, max_value=250, value=125, step=1)
     Sk = np.diag(S[:k])
-    # print(U[:, :k].shape, Sk.shape, V[:, :k].shape)
+    print(U[:, :k].shape, Sk.shape, V[:, :k].shape)
     compressed_img = U[:, :k] @ Sk @ V[:k, :]
 
     # plot images in two columns
@@ -47,18 +58,10 @@ if img is not None:
     compressed_size2 = Sk.size * Sk.itemsize + V[:k, :].size * V[:k, :].itemsize + U[:k, :].size * U[:k, :].itemsize
     original_text = "Original image uses " + str(original_size) + " bytes"
 
-    st.write("Original image uses", original_size, " bytes")
+    # col1.write("Original image uses", original_size, " bytes")
     col1.write(original_text)
     original_text = "Compressed image uses " + str(compressed_size) + " bytes"
     col2.write(original_text)
     "If S is stored as a diagonal (sparse) matrix, the compressed image is ", np.round(compressed_size / original_size * 100, 5), "% of the original image's size"
     "If S is stored as a 1D list, the compressed image is ", np.round(compressed_size2 / original_size * 100, 5), "% of the original image's size"
     st.metric(label="Compression Ratio", value=np.round(compressed_size2 / original_size, 5))
-
-
-
-
-
-
-
-
