@@ -6,4 +6,3 @@ See a demo of this project at https://share.streamlit.io/chychiang/image_compres
 
 - [ ] randomized image generation
 - [ ] make UI more consistent
-- [ ] solve streamlit deploy model not found issue
