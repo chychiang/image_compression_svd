@@ -4,5 +4,5 @@ See a demo of this project at https://share.streamlit.io/chychiang/image_compres
 
 # TODO
 
-- [ ] randomized image generation
+- [ ] randomized image generation using some imageNet or some library
 - [ ] make UI more consistent
